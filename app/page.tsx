@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 // import Image from "next/image";
 
 export default function Home() {
@@ -8,10 +10,14 @@ export default function Home() {
         Discover and manage your favorite books in one place.
       </p>
       <div className="flex justify-center space-x-4">
-        <a href="/books" className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+        <Link
+          href="/books"
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
           Browse Books
-        </a>
-        <a href="/login" className="px-6 py-3 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50">
+        </Link>
+        <a
+          href="/login"
+          className="px-6 py-3 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50">
           Sign In
         </a>
       </div>

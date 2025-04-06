@@ -12,7 +12,6 @@ import {
 import { Models, ID, Query } from "appwrite";
 
 // Book model interface
-// Define book-related types
 export interface Book extends Models.Document {
   title: string;
   author: string;

@@ -5,7 +5,7 @@ import { authService } from '@/services/authService';
 import { useRouter } from 'next/navigation';
 import { Models } from 'appwrite';
 
-// Define the shape of your context value
+
 interface AuthContextType {
   user: Models.User<Models.Preferences> | null;
   loading: boolean;
@@ -15,10 +15,10 @@ interface AuthContextType {
   isAuthenticated: boolean;
 }
 
-// Create the context with default value
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Define provider props
+
 interface AuthProviderProps {
   children: ReactNode;
 }

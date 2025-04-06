@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { bookService } from '@/services/bookService';
-import { useAuth } from '@/contexts/AuthContext';
-import Image from 'next/image';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { bookService } from "@/services/bookService";
+import { useAuth } from "@/contexts/AuthContext";
+import Image from "next/image";
 interface Book {
   $id: string;
   title: string;
@@ -23,7 +23,7 @@ interface BookDetailProps {
 export default function BookDetail({ bookId }: BookDetailProps) {
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
   const { user } = useAuth();
   const router = useRouter();
 
@@ -35,30 +35,41 @@ export default function BookDetail({ bookId }: BookDetailProps) {
   const fetchBook = async () => {
     try {
       setLoading(true);
-      const bookData: Book = await bookService.getBook(bookId);
+      const document = await bookService.getBook(bookId);
+      const bookData: Book = {
+        $id: document.$id,
+        title: document.title,
+        author: document.author,
+        genre: document.genre,
+        description: document.description,
+        coverImageId: document.coverImageId,
+        userId: document.userId,
+      };
       setBook(bookData);
     } catch (error) {
-      console.error('Error fetching book:', error);
-      setError('Failed to load book details');
+      console.error("Error fetching book:", error);
+      setError("Failed to load book details");
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async () => {
-    if (!confirm('Are you sure you want to delete this book?')) return;
+    if (!confirm("Are you sure you want to delete this book?")) return;
 
     try {
       await bookService.deleteBook(bookId);
-      router.push('/books');
+      router.push("/books");
     } catch (error) {
-      console.error('Error deleting book:', error);
-      alert('Failed to delete book');
+      console.error("Error deleting book:", error);
+      alert("Failed to delete book");
     }
   };
 
-  if (loading) return <div className="text-center py-8">Loading book details...</div>;
-  if (error) return <div className="text-center py-8 text-red-600">{error}</div>;
+  if (loading)
+    return <div className="text-center py-8">Loading book details...</div>;
+  if (error)
+    return <div className="text-center py-8 text-red-600">{error}</div>;
   if (!book) return <div className="text-center py-8">Book not found</div>;
 
   const isOwner = user && user.$id === book.userId;
@@ -75,7 +86,10 @@ export default function BookDetail({ bookId }: BookDetailProps) {
         <div className="md:w-1/3">
           {book.coverImageId ? (
             <Image
-              src={bookService.getImagePreview(book.coverImageId) || '/placeholder-image.png'}
+              src={
+                bookService.getImagePreview(book.coverImageId) ||
+                "/placeholder-image.png"
+              }
               alt={`Cover for ${book.title}`}
               className="w-full rounded-lg shadow-md"
             />
@@ -102,14 +116,12 @@ export default function BookDetail({ bookId }: BookDetailProps) {
             <div className="mt-8 flex space-x-4">
               <Link
                 href={`/books/${book.$id}/edit`}
-                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
-              >
+                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
                 Edit Book
               </Link>
               <button
                 onClick={handleDelete}
-                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
-              >
+                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
                 Delete Book
               </button>
             </div>
