@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { bookService } from "@/services/bookService";
 import { useAuth } from "@/contexts/AuthContext";
-import Image from "next/image";
+
 interface Book {
   $id: string;
   title: string;
@@ -21,11 +22,11 @@ interface BookListProps {
   authorOnly?: boolean;
 }
 
-export default function BookList({
+export default function BookList ({
   userOnly = false,
   genreOnly = false,
   authorOnly = false,
-}: BookListProps) {
+}:BookListProps)  {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
@@ -74,7 +75,7 @@ export default function BookList({
 
       if (genreOnly) {
         booksData = (
-          await bookService.getBooksByGenre(user?.$id || "romance")
+          await bookService.getBooksByGenre(user?.$id || "")
         ).documents.map((doc) => ({
           $id: doc.$id,
           title: doc.title,
@@ -88,7 +89,7 @@ export default function BookList({
 
       if (authorOnly) {
         booksData = (
-          await bookService.getBooksByAuthor(user?.$id || "me")
+          await bookService.getBooksByAuthor(user?.$id || "")
         ).documents.map((doc) => ({
           $id: doc.$id,
           title: doc.title,
@@ -124,20 +125,27 @@ export default function BookList({
 
   if (loading)
     return (
-      <div className="text-center py-8 text-2xl text-gray-800 ">
+      <div className="text-center py-8 text-2xl text-gray-800 transition-opacity duration-300 animate-pulse">
         Loading books...
       </div>
     );
   if (error)
-    return <div className="text-center py-8 text-red-600">{error}</div>;
+    return (
+      <div className="text-center py-8 text-red-600 transition-opacity duration-300 hover:opacity-80">
+        {error}
+      </div>
+    );
   if (books.length === 0) {
     return (
       <div className="text-center py-8">
-        <p className="mb-4">No books found.</p>
+        <p className="mb-4 text-gray-600 transition-opacity duration-300 hover:opacity-80">
+          No books found.
+        </p>
         {user && (
           <Link
             href="/books/new"
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold transition-all duration-300 hover:bg-blue-700 hover:shadow-lg hover:-translate-y-1 active:scale-95"
+          >
             Add a New Book
           </Link>
         )}
@@ -146,15 +154,16 @@ export default function BookList({
   }
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">
+    <div className="max-w-7xl mx-auto px-4 py-8 ">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-300 transition-transform duration-300 hover:scale-105">
           {userOnly ? "My Books" : "All Books"}
         </h1>
         {user && (
           <Link
             href="/books/new"
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+            className="px-4 py-2 bg-blue-600 text-white rounded-2xl font-semibold transition-all duration-300 hover:bg-blue-700 hover:shadow-lg hover:-translate-y-1 active:scale-95"
+          >
             Add a New Book
           </Link>
         )}
@@ -164,8 +173,9 @@ export default function BookList({
         {books.map((book) => (
           <div
             key={book.$id}
-            className="border rounded-lg overflow-hidden shadow-md">
-            <div className="h-48 bg-gray-200">
+            className="border rounded-lg overflow-hidden shadow-md bg-white transform transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
+          >
+            <div className="h-48 bg-gray-200 relative">
               {book.coverImageId ? (
                 <Image
                   width={150}
@@ -175,25 +185,34 @@ export default function BookList({
                     "/default-cover.jpg"
                   }
                   alt={`Cover for ${book.title}`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 />
               ) : (
-                <div className="flex items-center justify-center h-full text-gray-500">
+                <div className="flex items-center justify-center h-full text-gray-500 transition-opacity duration-300 hover:opacity-80">
                   No cover image
                 </div>
               )}
             </div>
 
             <div className="p-4">
-              <h2 className="text-lg font-semibold">{book.title}</h2>
-              <p className="text-gray-700">{book.author}</p>
-              <p className="text-sm text-gray-500 mt-1">{book.genre}</p>
-              <p className="text-sm mt-2 line-clamp-2">{book.description}</p>
+              <h2 className="text-lg font-semibold text-gray-800 transition-colors duration-300 hover:text-blue-600">
+                {book.title}
+              </h2>
+              <p className="text-gray-700 transition-opacity duration-300 hover:opacity-80">
+                {book.author}
+              </p>
+              <p className="text-sm text-gray-500 mt-1 transition-opacity duration-300 hover:opacity-80">
+                {book.genre}
+              </p>
+              <p className="text-sm mt-2 line-clamp-2 text-gray-600 transition-opacity duration-300 hover:opacity-80">
+                {book.description}
+              </p>
 
-              <div className="mt-4 flex justify-between">
+              <div className="mt-4 flex justify-between items-center">
                 <Link
                   href={`/books/${book.$id}`}
-                  className="text-blue-600 hover:underline">
+                  className="text-blue-600 font-medium transition-all duration-300 hover:underline hover:text-blue-800"
+                >
                   View Details
                 </Link>
 
@@ -201,12 +220,14 @@ export default function BookList({
                   <div className="space-x-2">
                     <Link
                       href={`/books/${book.$id}/edit`}
-                      className="text-green-600 hover:underline">
+                      className="text-blue-600 font-medium transition-all duration-300 hover:underline hover:text-blue-800"
+                    >
                       Edit
                     </Link>
                     <button
                       onClick={() => handleDelete(book.$id)}
-                      className="text-red-600 hover:underline">
+                      className="bg-blue-600 px-4 rounded-2xl py-1 cursor-pointer font-medium transition-all duration-300"
+                    >
                       Delete
                     </button>
                   </div>
@@ -218,4 +239,4 @@ export default function BookList({
       </div>
     </div>
   );
-}
+};

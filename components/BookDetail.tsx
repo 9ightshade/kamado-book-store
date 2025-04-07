@@ -18,9 +18,11 @@ interface Book {
 
 interface BookDetailProps {
   bookId: string;
+  genreId?: string;
+  authorId?: string;
 }
 
-export default function BookDetail({ bookId }: BookDetailProps) {
+export default function BookDetail({ bookId, genreId, authorId }: BookDetailProps) {
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
