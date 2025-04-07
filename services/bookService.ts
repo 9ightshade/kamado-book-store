@@ -118,11 +118,32 @@ export const bookService = {
     genre: string
   ): Promise<Models.DocumentList<Models.Document>> {
     try {
-      return await databases.listDocuments(DATABASES_ID, BOOKS_COLLECTION_ID, [
-        Query.equal("genre", genre),
-      ]);
+      // Case-insensitive search that works with partial matches
+      const book = await databases.listDocuments(
+        DATABASES_ID,
+        BOOKS_COLLECTION_ID,
+        [Query.search("genre", genre)]
+      );
+      console.log(book);
+      return book;
     } catch (error) {
       console.error("Error fetching books by genre:", error);
+      throw error;
+    }
+  },
+
+  async searchBooks(
+    searchTerm: string
+  ): Promise<Models.DocumentList<Models.Document>> {
+    try {
+      // Search across title, author, and genre
+      return await databases.listDocuments(DATABASES_ID, BOOKS_COLLECTION_ID, [
+        Query.search("title", searchTerm),
+        Query.search("author", searchTerm),
+        Query.search("genre", searchTerm),
+      ]);
+    } catch (error) {
+      console.error("Error searching books:", error);
       throw error;
     }
   },
@@ -131,9 +152,14 @@ export const bookService = {
     author: string
   ): Promise<Models.DocumentList<Models.Document>> {
     try {
-      return await databases.listDocuments(DATABASES_ID, BOOKS_COLLECTION_ID, [
-        Query.equal("author", author),
-      ]);
+      // Case-insensitive search that works with partial matches
+      const book = await databases.listDocuments(
+        DATABASES_ID,
+        BOOKS_COLLECTION_ID,
+        [Query.search("author", author)]
+      );
+      console.log(book);
+      return book;
     } catch (error) {
       console.error("Error fetching books by author:", error);
       throw error;
@@ -145,13 +171,13 @@ export const bookService = {
     title: string
   ): Promise<Models.DocumentList<Models.Document>> {
     try {
+      // Case-insensitive search that works with partial matches
       const book = await databases.listDocuments(
         DATABASES_ID,
         BOOKS_COLLECTION_ID,
-        [Query.equal("title", title)]
+        [Query.search("title", title)]
       );
       console.log(book);
-
       return book;
     } catch (error) {
       console.error("Error fetching books by title:", error);

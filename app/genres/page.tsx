@@ -10,25 +10,25 @@ export default function BookGenreSearchPage() {
   const searchParams = useSearchParams();
   const genreParam = searchParams.get("genre");
   
-  // Available genres
-  const genres = [
-    "Fiction",
-    "Fantasy",
-    "Sci-Fi",
-    "Mystery",
-    "Thriller",
-    "Romance",
-    "Horror",
-    "Science",
-    "History",
-    "Non-fiction",
-    "Biography",
-    "Young Adult",
-    "Children's",
-    "Poetry",
-    "Drama",
-    "Other"
-  ];
+  // // Available genres
+  // const genres = [
+  //   "Fiction",
+  //   "Fantasy",
+  //   "Sci-Fi",
+  //   "Mystery",
+  //   "Thriller",
+  //   "Romance",
+  //   "Horror",
+  //   "Science",
+  //   "History",
+  //   "Non-fiction",
+  //   "Biography",
+  //   "Young Adult",
+  //   "Children's",
+  //   "Poetry",
+  //   "Drama",
+  //   "Other"
+  // ];
   
   const [selectedGenre, setSelectedGenre] = useState<string>(genreParam || "");
   const [isSearching, setIsSearching] = useState<boolean>(false);
@@ -83,7 +83,7 @@ export default function BookGenreSearchPage() {
         className="mb-8 mx-auto max-w-[70%] py-3 px-3 flex gap-2 bg-gray-800 rounded-2xl">
         <input
           type="text"
-          placeholder="Search by title..."
+          placeholder="Search by genre..."
           value={selectedGenre}
           onChange={(e) => setSelectedGenre(e.target.value)}
           className="w-full p-2 rounded-xl outline-none"
