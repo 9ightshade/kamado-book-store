@@ -1,7 +1,7 @@
 export default function authors() {
   return (
     <div>
-      <h1>Authors</h1>
+      <h1>List by Authors</h1>
     </div>
   );
 }
