@@ -114,11 +114,12 @@ export default function AboutUs() {
                   "Every Kamado team member shares a deep love for books. Our staff's expertise and enthusiasm help create the unique experience that sets our stores apart.",
               },
             ].map((value, index) => (
-              <div key={index} className="bg-white p-8 rounded-lg shadow-md">
+              <div key={index} className=" p-8 rounded-lg shadow-md relative">
                 <h3 className="text-xl font-bold mb-4 text-gray-800">
                   {value.title}
                 </h3>
                 <p className="text-gray-600">{value.description}</p>
+                <div className="absolute inset-0 bg-black opacity-50"></div>
               </div>
             ))}
           </div>
@@ -147,7 +148,7 @@ export default function AboutUs() {
 
       {/* Locations Section */}
       <section className="py-16">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-4 py-4 md:px-6 relative">
           <h2 className="text-3xl font-bold mb-12 text-center text-gray-800">
             Our Locations
           </h2>
@@ -166,11 +167,12 @@ export default function AboutUs() {
               </div>
             ))}
           </div>
+          <div className="absolute inset-0 bg-black opacity-50"></div>
         </div>
       </section>
 
       {/* Contact CTA Section */}
-      <section className="py-16 bg-gray-900 text-white">
+      <section className="py-16 bg-gray-800 text-white">
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h2 className="text-3xl font-bold mb-6">Get in Touch</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
