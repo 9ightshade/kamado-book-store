@@ -15,7 +15,9 @@ export default function Navbar() {
   }, [pathname]);
 
   const isActive = (path: string) => {
-    return pathname.startsWith(path) ? "font-bold text-blue-600" : "";
+    return pathname.startsWith(path)
+      ? "font-bold text-blue-600"
+      : "text-gray-600";
   };
 
   const handleLogout = async () => {
@@ -37,7 +39,9 @@ export default function Navbar() {
         <li key={item.path}>
           <Link
             href={item.path}
-            className={`px-3 py-2 ${isActive(item.path)} hover:text-blue-500`}>
+            className={`px-3 py-2 ${isActive(
+              item.path
+            )} transition-all duration-300 hover:text-blue-500 hover:scale-105`}>
             {item.name}
           </Link>
         </li>
@@ -46,11 +50,13 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="shadow-md">
+    <nav className=" shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="text-xl font-bold">
+            <Link
+              href="/"
+              className="text-xl font-bold text-gray-400 transition-all duration-300 hover:text-gray-100 hover:scale-105">
               Kamado Books Collection
             </Link>
           </div>
@@ -63,13 +69,13 @@ export default function Navbar() {
               {!loading && (
                 <>
                   {user ? (
-                    <li className="flex items-center ">
-                      <span className="px-3 py-2 font-bold">
-                        Hello, {user.name || user.email}
+                    <li className="flex items-center space-x-2">
+                      <span className="px-3 py-2 text-gray-800 font-semibold transition-opacity duration-300 hover:opacity-80">
+                        Hashira, {user.name || user.email}
                       </span>
                       <button
                         onClick={handleLogout}
-                        className="ml-2 px-3 py-2 border border-blue-600 text-blue-600 rounded hover:bg-blue-600 hover:text-white cursor-pointer">
+                        className="px-3 py-2 border border-blue-600 text-blue-600 rounded-2xl cursor-pointer font-semibold transition-all duration-300 hover:bg-blue-600 hover:text-white hover:shadow-md hover:-translate-y-1 active:scale-95">
                         Sign Out
                       </button>
                     </li>
@@ -80,14 +86,14 @@ export default function Navbar() {
                           href="/login"
                           className={`px-3 py-2 ${isActive(
                             "/login"
-                          )} hover:text-blue-500`}>
+                          )} transition-all duration-300 hover:text-blue-500 hover:scale-105`}>
                           Sign In
                         </Link>
                       </li>
                       <li>
                         <Link
                           href="/register"
-                          className="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-2xl">
+                          className="px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold transition-all duration-300 hover:bg-blue-700 hover:shadow-md hover:-translate-y-1 active:scale-95">
                           Register
                         </Link>
                       </li>
@@ -103,7 +109,7 @@ export default function Navbar() {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle mobile menu"
-              className="text-gray-600 hover:text-blue-500 focus:outline-none">
+              className="text-gray-600 transition-all duration-300 hover:text-blue-500 hover:scale-110 focus:outline-none">
               <svg
                 className="h-6 w-6"
                 fill="none"
@@ -135,20 +141,20 @@ export default function Navbar() {
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
           mobileMenuOpen ? "max-h-screen" : "max-h-0"
         }`}>
-        <ul className="px-2 pt-2 pb-3 space-y-1">
+        <ul className="px-2 pt-2 pb-3 space-y-1 ">
           {renderNavLinks()}
 
           {!loading && (
             <>
               {user ? (
                 <>
-                  <li className="px-3 py-2 text-gray-600">
+                  <li className="px-3 py-2 text-gray-600 transition-opacity duration-300 hover:opacity-80">
                     Hello, {user.name || user.email}
                   </li>
                   <li>
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-3 py-2 text-blue-600 hover:bg-blue-50">
+                      className="w-full text-left px-3 py-2 text-blue-600 font-semibold transition-all duration-300 hover:bg-blue-50 hover:text-blue-800">
                       Sign Out
                     </button>
                   </li>
@@ -160,14 +166,14 @@ export default function Navbar() {
                       href="/login"
                       className={`block px-3 py-2 ${isActive(
                         "/login"
-                      )} hover:bg-blue-50`}>
+                      )} transition-all duration-300 hover:bg-blue-50 hover:text-blue-500`}>
                       Sign In
                     </Link>
                   </li>
                   <li>
                     <Link
                       href="/register"
-                      className="block px-3 py-2 text-blue-600 hover:bg-blue-50 rounded-2xl">
+                      className="block px-3 py-2 text-blue-600 font-semibold transition-all duration-300 hover:bg-blue-50 hover:text-blue-800">
                       Register
                     </Link>
                   </li>

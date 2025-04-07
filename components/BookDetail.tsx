@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { bookService } from "@/services/bookService";
 import { useAuth } from "@/contexts/AuthContext";
-import Image from "next/image";
+
 interface Book {
   $id: string;
   title: string;
@@ -20,7 +21,7 @@ interface BookDetailProps {
   bookId: string;
 }
 
-export default function BookDetail({ bookId }: BookDetailProps) {
+export default function BookDetail ({ bookId }:BookDetailProps) {
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
@@ -67,23 +68,39 @@ export default function BookDetail({ bookId }: BookDetailProps) {
   };
 
   if (loading)
-    return <div className="text-center py-8">Loading book details...</div>;
+    return (
+      <div className="text-center py-8 text-2xl text-gray-800 transition-opacity duration-300 animate-pulse">
+        Loading book details...
+      </div>
+    );
   if (error)
-    return <div className="text-center py-8 text-red-600">{error}</div>;
-  if (!book) return <div className="text-center py-8">Book not found</div>;
+    return (
+      <div className="text-center py-8 text-red-600 transition-opacity duration-300 hover:opacity-80">
+        {error}
+      </div>
+    );
+  if (!book)
+    return (
+      <div className="text-center py-8 text-gray-600 transition-opacity duration-300 hover:opacity-80">
+        Book not found
+      </div>
+    );
 
   const isOwner = user && user.$id === book.userId;
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="mb-6">
-        <Link href="/books" className="text-blue-600 hover:underline">
-          &larr; Back to Books
+        <Link
+          href="/books"
+          className="text-blue-600 transition-all font-bold duration-300 hover:underline hover:text-blue-800"
+        >
+          ← Back to Books
         </Link>
       </div>
 
       <div className="flex flex-col md:flex-row gap-8">
-        <div className="md:w-1/3">
+        <div className="md:w-1/3 transform transition-all duration-300 hover:-translate-y-2">
           {book.coverImageId ? (
             <Image
               width={300}
@@ -93,37 +110,47 @@ export default function BookDetail({ bookId }: BookDetailProps) {
                 "/placeholder-image.png"
               }
               alt={`Cover for ${book.title}`}
-              className="w-full rounded-lg shadow-md"
+              className="w-full h-full object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
             />
           ) : (
-            <div className="w-full aspect-[2/3] bg-gray-200 rounded-lg flex items-center justify-center text-gray-500">
+            <div className="w-full aspect-[2/3] bg-gray-200 rounded-lg shadow-md flex items-center justify-center text-gray-500 transition-opacity duration-300 hover:opacity-80">
               No cover image
             </div>
           )}
         </div>
 
         <div className="md:w-2/3">
-          <h1 className="text-3xl font-bold">{book.title}</h1>
-          <p className="text-xl text-gray-700 mt-2">by {book.author}</p>
-          <div className="mt-2 inline-block px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-sm">
+          <h1 className="text-3xl font-bold text-gray-800 transition-transform duration-300 hover:scale-105">
+            {book.title}
+          </h1>
+          <p className="text-xl text-gray-700 mt-2 transition-opacity duration-300 hover:opacity-80">
+            by {book.author}
+          </p>
+          <div className="mt-2 inline-block px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-sm transition-all duration-300 hover:bg-blue-200 hover:text-blue-800">
             {book.genre}
           </div>
 
           <div className="mt-6">
-            <h2 className="text-xl font-semibold mb-2">Description</h2>
-            <p className="whitespace-pre-line">{book.description}</p>
+            <h2 className="text-xl font-semibold text-gray-800 mb-2 transition-colors duration-300 hover:text-blue-600">
+              Description
+            </h2>
+            <p className="whitespace-pre-line text-gray-600 transition-opacity duration-300 hover:opacity-80">
+              {book.description}
+            </p>
           </div>
 
           {isOwner && (
             <div className="mt-8 flex space-x-4">
               <Link
                 href={`/books/${book.$id}/edit`}
-                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                className="px-4 py-2 bg-blue-600 text-white cursor-pointer rounded-lg font-semibold transition-all duration-300 hover:bg-blue-700 hover:shadow-lg hover:-translate-y-1 active:scale-95"
+              >
                 Edit Book
               </Link>
               <button
                 onClick={handleDelete}
-                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                className="px-4 py-2 bg-pink-300 text-gray-700 rounded-lg font-semibold transition-all duration-300 hover:bg-pink-200 cursor-pointer hover:shadow-lg hover:-translate-y-1 active:scale-95"
+              >
                 Delete Book
               </button>
             </div>
@@ -132,4 +159,4 @@ export default function BookDetail({ bookId }: BookDetailProps) {
       </div>
     </div>
   );
-}
+};
