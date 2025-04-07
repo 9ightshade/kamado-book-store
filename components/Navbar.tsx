@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useAuth } from '@/contexts/AuthContext';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Navbar() {
   const { user, logout, loading } = useAuth();
@@ -15,7 +15,7 @@ export default function Navbar() {
   }, [pathname]);
 
   const isActive = (path: string) => {
-    return pathname.startsWith(path) ? 'font-bold text-blue-600' : '';
+    return pathname.startsWith(path) ? "font-bold text-blue-600" : "";
   };
 
   const handleLogout = async () => {
@@ -24,9 +24,9 @@ export default function Navbar() {
   };
 
   const navItems = [
-    { name: 'Home', path: '/', auth: false },
-    { name: 'Books', path: '/books', auth: false },
-    { name: 'My Books', path: '/my-books', auth: true },
+    { name: "Home", path: "/", auth: false },
+    { name: "Books", path: "/books", auth: false },
+    { name: "My Books", path: "/my-books", auth: true },
   ];
 
   const renderNavLinks = () => {
@@ -37,8 +37,7 @@ export default function Navbar() {
         <li key={item.path}>
           <Link
             href={item.path}
-            className={`px-3 py-2 ${isActive(item.path)} hover:text-blue-500`}
-          >
+            className={`px-3 py-2 ${isActive(item.path)} hover:text-blue-500`}>
             {item.name}
           </Link>
         </li>
@@ -52,7 +51,7 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="text-xl font-bold">
-              Shinobi Books
+              Kamado Books Collection
             </Link>
           </div>
 
@@ -64,14 +63,13 @@ export default function Navbar() {
               {!loading && (
                 <>
                   {user ? (
-                    <li className="flex items-center">
-                      <span className="px-3 py-2 text-gray-600">
+                    <li className="flex items-center ">
+                      <span className="px-3 py-2 font-bold">
                         Hello, {user.name || user.email}
                       </span>
                       <button
                         onClick={handleLogout}
-                        className="ml-2 px-3 py-2 border border-blue-600 text-blue-600 rounded hover:bg-blue-50"
-                      >
+                        className="ml-2 px-3 py-2 border border-blue-600 text-blue-600 rounded hover:bg-blue-600 hover:text-white cursor-pointer">
                         Sign Out
                       </button>
                     </li>
@@ -80,16 +78,16 @@ export default function Navbar() {
                       <li>
                         <Link
                           href="/login"
-                          className={`px-3 py-2 ${isActive('/login')} hover:text-blue-500`}
-                        >
+                          className={`px-3 py-2 ${isActive(
+                            "/login"
+                          )} hover:text-blue-500`}>
                           Sign In
                         </Link>
                       </li>
                       <li>
                         <Link
                           href="/register"
-                          className="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-2xl"
-                        >
+                          className="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-2xl">
                           Register
                         </Link>
                       </li>
@@ -105,14 +103,12 @@ export default function Navbar() {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle mobile menu"
-              className="text-gray-600 hover:text-blue-500 focus:outline-none"
-            >
+              className="text-gray-600 hover:text-blue-500 focus:outline-none">
               <svg
                 className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+                stroke="currentColor">
                 {mobileMenuOpen ? (
                   <path
                     strokeLinecap="round"
@@ -137,9 +133,8 @@ export default function Navbar() {
       {/* Mobile menu with animation */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          mobileMenuOpen ? 'max-h-screen' : 'max-h-0'
-        }`}
-      >
+          mobileMenuOpen ? "max-h-screen" : "max-h-0"
+        }`}>
         <ul className="px-2 pt-2 pb-3 space-y-1">
           {renderNavLinks()}
 
@@ -153,8 +148,7 @@ export default function Navbar() {
                   <li>
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-3 py-2 text-blue-600 hover:bg-blue-50"
-                    >
+                      className="w-full text-left px-3 py-2 text-blue-600 hover:bg-blue-50">
                       Sign Out
                     </button>
                   </li>
@@ -164,16 +158,16 @@ export default function Navbar() {
                   <li>
                     <Link
                       href="/login"
-                      className={`block px-3 py-2 ${isActive('/login')} hover:bg-blue-50`}
-                    >
+                      className={`block px-3 py-2 ${isActive(
+                        "/login"
+                      )} hover:bg-blue-50`}>
                       Sign In
                     </Link>
                   </li>
                   <li>
                     <Link
                       href="/register"
-                      className="block px-3 py-2 text-blue-600 hover:bg-blue-50 rounded-2xl"
-                    >
+                      className="block px-3 py-2 text-blue-600 hover:bg-blue-50 rounded-2xl">
                       Register
                     </Link>
                   </li>

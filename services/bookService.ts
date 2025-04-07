@@ -191,6 +191,9 @@ export const bookService = {
     if (!imageId) return null;
 
     // Generate and return the actual URL string
-    return storage.getFileView(STORAGE_BUCKET_ID, imageId);
+
+    const resourceUrl = storage.getFileView(STORAGE_BUCKET_ID, imageId);
+    console.log(resourceUrl);
+    return resourceUrl;
   },
 };
