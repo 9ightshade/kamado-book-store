@@ -17,11 +17,15 @@ interface Book {
 
 interface BookListProps {
   userOnly?: boolean;
-  genreOnly?:boolean;
-  authorOnly?:boolean;
+  genreOnly?: boolean;
+  authorOnly?: boolean;
 }
 
-export default function BookList({ userOnly = false }: BookListProps) {
+export default function BookList({
+  userOnly = false,
+  genreOnly = false,
+  authorOnly = false,
+}: BookListProps) {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
@@ -30,7 +34,7 @@ export default function BookList({ userOnly = false }: BookListProps) {
   useEffect(() => {
     fetchBooks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userOnly, user]);
+  }, [userOnly, user, genreOnly, authorOnly]);
 
   const fetchBooks = async () => {
     if (userOnly && !user) {
@@ -41,28 +45,63 @@ export default function BookList({ userOnly = false }: BookListProps) {
 
     try {
       setLoading(true);
-      const booksData: Book[] = userOnly
-        ? (await bookService.getBooksByUser(user?.$id || "")).documents.map(
-            (doc) => ({
-              $id: doc.$id,
-              title: doc.title,
-              author: doc.author,
-              genre: doc.genre,
-              description: doc.description,
-              coverImageId: doc.coverImageId,
-              userId: doc.userId,
-            })
-          )
-        : (await bookService.getBooks()).documents.map((doc) => ({
-            $id: doc.$id,
-            title: doc.title,
-            author: doc.author,
-            genre: doc.genre,
-            description: doc.description,
-            coverImageId: doc.coverImageId,
-            userId: doc.userId,
-          }));
+
+      let booksData: Book[] = (await bookService.getBooks()).documents.map(
+        (doc) => ({
+          $id: doc.$id,
+          title: doc.title,
+          author: doc.author,
+          genre: doc.genre,
+          description: doc.description,
+          coverImageId: doc.coverImageId,
+          userId: doc.userId,
+        })
+      );
+
+      if (userOnly) {
+        booksData = (
+          await bookService.getBooksByUser(user?.$id || "")
+        ).documents.map((doc) => ({
+          $id: doc.$id,
+          title: doc.title,
+          author: doc.author,
+          genre: doc.genre,
+          description: doc.description,
+          coverImageId: doc.coverImageId,
+          userId: doc.userId,
+        }));
+      }
+
+      if (genreOnly) {
+        booksData = (
+          await bookService.getBooksByGenre(user?.$id || "romance")
+        ).documents.map((doc) => ({
+          $id: doc.$id,
+          title: doc.title,
+          author: doc.author,
+          genre: doc.genre,
+          description: doc.description,
+          coverImageId: doc.coverImageId,
+          userId: doc.userId,
+        }));
+      }
+
+      if (authorOnly) {
+        booksData = (
+          await bookService.getBooksByAuthor(user?.$id || "me")
+        ).documents.map((doc) => ({
+          $id: doc.$id,
+          title: doc.title,
+          author: doc.author,
+          genre: doc.genre,
+          description: doc.description,
+          coverImageId: doc.coverImageId,
+          userId: doc.userId,
+        }));
+      }
+
       setBooks(booksData);
+      console.log(booksData);
     } catch (error) {
       console.error("Error fetching books:", error);
       setError("Failed to load books");
@@ -83,7 +122,12 @@ export default function BookList({ userOnly = false }: BookListProps) {
     }
   };
 
-  if (loading) return <div className="text-center py-8 text-2xl text-gray-800 ">Loading books...</div>;
+  if (loading)
+    return (
+      <div className="text-center py-8 text-2xl text-gray-800 ">
+        Loading books...
+      </div>
+    );
   if (error)
     return <div className="text-center py-8 text-red-600">{error}</div>;
   if (books.length === 0) {

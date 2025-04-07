@@ -5,7 +5,7 @@ export default function Genres() {
     <div>
       <h1>List by Genre</h1>
       <p>Explore books categorized by genre.</p>
-      <BookList/>
+      <BookList genreOnly={true} />
     </div>
   );
 }

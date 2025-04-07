@@ -24,7 +24,7 @@ export default function Home() {
       <div className="mt-4">
         <Link
           href="/books/search"
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+          className="px-6 py-3 text-white text-2xl rounded-lg underline">
           Search Our Collections
         </Link>
       </div>
