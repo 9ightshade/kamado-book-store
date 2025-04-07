@@ -84,7 +84,7 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="text-sm text-gray-400">
-            &copy; {currentYear} Nyan. All rights reserved.
+            &copy; {currentYear} Kamado. All rights reserved.
           </div>
 
           <div className="flex space-x-6 mt-4 md:mt-0">

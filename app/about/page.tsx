@@ -1,6 +1,7 @@
 // pages/about.tsx
 import React from "react";
 import Head from "next/head";
+import Link from "next/link";
 
 interface TeamMember {
   name: string;
@@ -171,9 +172,11 @@ export default function AboutUs() {
             Have questions or want to learn more about Kamado Book Stores
             Collection? We&apos;d love to hear from you.
           </p>
-          <button className="bg-white text-gray-900 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition">
-            Contact Us
-          </button>
+          <Link href={"/contact"}>
+            <button className="bg-white text-gray-900 px-8 py-3 cursor-pointer rounded-lg font-bold hover:bg-gray-100 transition">
+              Contact Us
+            </button>
+          </Link>
         </div>
       </section>
     </div>
