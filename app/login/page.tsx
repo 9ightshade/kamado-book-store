@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useState, useEffect, ChangeEvent, FormEvent, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
@@ -10,7 +10,8 @@ interface FormData {
   password: string;
 }
 
-export default function LoginPage(): JSX.Element {
+// Component that uses useSearchParams
+function LoginForm(): JSX.Element {
   const [formData, setFormData] = useState<FormData>({
     email: '',
     password: '',
@@ -111,5 +112,14 @@ export default function LoginPage(): JSX.Element {
         </Link>
       </p>
     </div>
+  );
+}
+
+// Main page component with Suspense wrapper
+export default function LoginPage(): JSX.Element {
+  return (
+    <Suspense fallback={<div className="max-w-md mx-auto mt-10 text-center">Loading...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 }

@@ -13,7 +13,7 @@ export default function Protected({ children }: { children: React.ReactNode }) {
       if (!user) router.push('/login');
       else setLoading(false);
     });
-  }, []);
+  }, [router]);
 
   if (loading) return <div>Loading...</div>;
   return <>{children}</>;
