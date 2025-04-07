@@ -86,6 +86,8 @@ export default function BookDetail({ bookId }: BookDetailProps) {
         <div className="md:w-1/3">
           {book.coverImageId ? (
             <Image
+              width={300}
+              height={300}
               src={
                 bookService.getImagePreview(book.coverImageId) ||
                 "/placeholder-image.png"
