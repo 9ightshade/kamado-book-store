@@ -36,14 +36,14 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="/authors"
+                    href="/books/search"
                     className="text-gray-400 hover:text-white transition-colors duration-200">
                     Authors
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href="/genres"
+                    href="/books/search"
                     className="text-gray-400 hover:text-white transition-colors duration-200">
                     Genres
                   </Link>
