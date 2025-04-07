@@ -113,6 +113,52 @@ export const bookService = {
     }
   },
 
+  //Get books by genre
+  async getBooksByGenre(
+    genre: string
+  ): Promise<Models.DocumentList<Models.Document>> {
+    try {
+      return await databases.listDocuments(DATABASES_ID, BOOKS_COLLECTION_ID, [
+        Query.equal("genre", genre),
+      ]);
+    } catch (error) {
+      console.error("Error fetching books by genre:", error);
+      throw error;
+    }
+  },
+  // Get books by author
+  async getBooksByAuthor(
+    author: string
+  ): Promise<Models.DocumentList<Models.Document>> {
+    try {
+      return await databases.listDocuments(DATABASES_ID, BOOKS_COLLECTION_ID, [
+        Query.equal("author", author),
+      ]);
+    } catch (error) {
+      console.error("Error fetching books by author:", error);
+      throw error;
+    }
+  },
+
+  //Get books by title
+  async getBooksByTitle(
+    title: string
+  ): Promise<Models.DocumentList<Models.Document>> {
+    try {
+      const book = await databases.listDocuments(
+        DATABASES_ID,
+        BOOKS_COLLECTION_ID,
+        [Query.equal("title", title)]
+      );
+      console.log(book);
+
+      return book;
+    } catch (error) {
+      console.error("Error fetching books by title:", error);
+      throw error;
+    }
+  },
+
   // Get a single book by ID
   async getBook(bookId: string): Promise<Models.Document> {
     try {

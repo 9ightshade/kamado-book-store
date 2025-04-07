@@ -21,6 +21,13 @@ export default function Home() {
           Sign In
         </a>
       </div>
+      <div className="mt-4">
+        <Link
+          href="/books/search"
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+          Search Our Collections
+        </Link>
+      </div>
     </div>
   );
 }

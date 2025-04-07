@@ -17,6 +17,8 @@ interface Book {
 
 interface BookListProps {
   userOnly?: boolean;
+  genreOnly?:boolean;
+  authorOnly?:boolean;
 }
 
 export default function BookList({ userOnly = false }: BookListProps) {
@@ -81,7 +83,7 @@ export default function BookList({ userOnly = false }: BookListProps) {
     }
   };
 
-  if (loading) return <div className="text-center py-8">Loading books...</div>;
+  if (loading) return <div className="text-center py-8 text-2xl text-gray-800 ">Loading books...</div>;
   if (error)
     return <div className="text-center py-8 text-red-600">{error}</div>;
   if (books.length === 0) {
