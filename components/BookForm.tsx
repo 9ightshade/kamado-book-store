@@ -137,7 +137,7 @@ export default function BookForm({ book }: BookFormProps) {
           value={formData.title}
           onChange={handleChange}
           required
-          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2"
+          className="mt-1 block w-full outline-none rounded-md border border-gray-300 shadow-sm p-2"
         />
       </div>
 
@@ -152,7 +152,7 @@ export default function BookForm({ book }: BookFormProps) {
           value={formData.author}
           onChange={handleChange}
           required
-          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2"
+          className="mt-1 block w-full rounded-md border outline-none border-gray-300 shadow-sm p-2"
         />
       </div>
 
@@ -166,8 +166,10 @@ export default function BookForm({ book }: BookFormProps) {
           value={formData.genre}
           onChange={handleChange}
           required
-          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2">
-          <option value="">Select a genre</option>
+          className="mt-1 block w-full outline-none rounded-md border text-blue-400 border-gray-300 shadow-sm p-2">
+          <option value="" disabled>
+            Select a genre
+          </option>
           <option value="Fiction">Fiction</option>
           <option value="Non-Fiction">Non-Fiction</option>
           <option value="Fantasy">Fantasy</option>
@@ -193,19 +195,19 @@ export default function BookForm({ book }: BookFormProps) {
           onChange={handleChange}
           required
           rows={4}
-          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2"></textarea>
+          className="mt-1 block w-full outline-none rounded-md border border-gray-300 shadow-sm p-2"></textarea>
       </div>
 
       <div>
         <label htmlFor="coverImage" className="block text-sm font-medium">
-          Book Cover
+          Add Book Cover
         </label>
         <input
           type="file"
           id="coverImage"
           accept="image/*"
           onChange={handleImageChange}
-          className="mt-1 block w-full"
+          className="mt-1 block w-full cursor-pointer hover:underline"
         />
         {previewUrl && (
           <div className="mt-2">
