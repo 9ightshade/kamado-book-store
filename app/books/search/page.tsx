@@ -11,7 +11,7 @@ export default function BookSearchPage() {
   const searchParams = useSearchParams();
   const queryParam = searchParams.get("query") || "";
   const typeParam = searchParams.get("type") || "title"; // Default search type
-  
+
   const [searchTerm, setSearchTerm] = useState<string>(queryParam);
   const [searchType, setSearchType] = useState<string>(typeParam);
   const [isSearching, setIsSearching] = useState<boolean>(false);
@@ -25,13 +25,13 @@ export default function BookSearchPage() {
         setError("Please enter a search term");
         return;
       }
-      
+
       setIsSearching(true);
       setError(null);
-      
+
       try {
         let results: Models.DocumentList<Models.Document>;
-        
+
         // Perform the appropriate search based on type
         switch (searchType) {
           case "author":
@@ -45,9 +45,9 @@ export default function BookSearchPage() {
             results = await bookService.getBooksByTitle(searchTerm);
             break;
         }
-        
+
         setBooks(results.documents);
-        
+
         // Update URL with search query and type
         const params = new URLSearchParams();
         params.set("query", searchTerm);
@@ -73,30 +73,29 @@ export default function BookSearchPage() {
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-700">
-        Search Books
+        Search Books by title, author and genre
       </h1>
-      
+
       <form
         onSubmit={handleSearch}
         className="mb-8 mx-auto max-w-[70%] py-3 px-3 flex flex-col gap-2  rounded-2xl">
-        
         <div className="flex flex-row gap-2 bg-gray-700 rounded-full ">
           <input
             type="text"
-            placeholder="Search books..."
+            placeholder="Search books by title, author and genre..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full p-2 rounded-xl outline-none px-3"
           />
-          
+
           <button
             type="submit"
             disabled={isSearching}
             className="bg-blue-600 text-white px-4 py-2 rounded-2xl hover:bg-blue-700 transition duration-200 cursor-pointer">
-            {isSearching ? "Searching..." : "Search"}
+            {isSearching ? "Searching HQ..." : "Search"}
           </button>
         </div>
-        
+
         <div className="flex justify-center gap-4 text-white py-2">
           <label className="flex items-center cursor-pointer">
             <input
@@ -109,7 +108,7 @@ export default function BookSearchPage() {
             />
             Title
           </label>
-          
+
           <label className="flex items-center cursor-pointer">
             <input
               type="radio"
@@ -121,7 +120,7 @@ export default function BookSearchPage() {
             />
             Author
           </label>
-          
+
           <label className="flex items-center cursor-pointer">
             <input
               type="radio"
@@ -135,18 +134,18 @@ export default function BookSearchPage() {
           </label>
         </div>
       </form>
-      
+
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
           {error}
         </div>
       )}
-      
+
       {books.length > 0 ? (
         <div>
           <h2 className="text-xl font-semibold mb-4">
-            Found {books.length} {books.length === 1 ? "book" : "books"}{" "}
-            with {searchType}: &quot;{searchTerm}&quot;
+            Found {books.length} {books.length === 1 ? "book" : "books"} with{" "}
+            {searchType}: &quot;{searchTerm}&quot;
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {books.map((book) => (
